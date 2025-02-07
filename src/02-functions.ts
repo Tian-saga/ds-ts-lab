@@ -44,7 +44,7 @@ function allOlder(friendsArray: Friend[]): string[] {
   addColleague(colleagues.current, "Sheild O Connell", "HR", "soc@here.com");
   console.log(colleagues.current.filter((c) => c.name === "Sheild O Connell")); 
 
-  
+
   function sortColleagues(
     colleagues: Colleague[],
     sorter: (c1: Colleague, c2: Colleague) => number,
@@ -71,3 +71,17 @@ function allOlder(friendsArray: Friend[]): string[] {
   // 测试 findFriends()
   console.log(findFriends(friends, (friend) => friend.name.startsWith('Pa'))); // 找出名字以 "Pa" 开头的朋友
   console.log(findFriends(friends, (friend) => friend.age < 35)); // 找出年龄小于 35 的朋友
+
+
+  function addInterest(friend: Friend, newInterest: string): string[] {
+    if (!friend.interests) {
+      friend.interests = []; //如果 `interests` 为空，则创建数组
+    }
+    friend.interests.push(newInterest); // 添加兴趣
+    return friend.interests;
+  }
+  
+  // 测试 addInterest()
+  console.log(addInterest(friends[0], "Politics")); // 预期输出：['Politics']
+  console.log(addInterest(friends[1], "Reading")); // 预期输出：['Music', 'Sport', 'Reading']
+  
