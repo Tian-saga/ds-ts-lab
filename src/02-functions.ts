@@ -1,4 +1,4 @@
-import {Friend, Colleague } from './myTypes'
+import {Friend, Colleague,EmailContact } from './myTypes'
 import { friends } from "./01-basics";
 import { colleagues } from "./01-basics";
 
@@ -18,12 +18,13 @@ function allOlder(friendsArray: Friend[]): string[] {
 
 
   // Find the colleague with the highest extension number.
-function highestExtension(cs: Colleague[]): Colleague {
+  function highestExtension(cs: Colleague[]) { // Inferred retun type
     const result = cs.sort(
       (c1, c2) => c1.contact.extension - c2.contact.extension
     );
     return result[cs.length - 1];
   }
+  
   console.log(highestExtension(colleagues.current));
   
   function addColleague(cs: Colleague[], name: string, department: string, email: string): void {
@@ -42,3 +43,23 @@ function highestExtension(cs: Colleague[]): Colleague {
   //测试 addColleague
   addColleague(colleagues.current, "Sheild O Connell", "HR", "soc@here.com");
   console.log(colleagues.current.filter((c) => c.name === "Sheild O Connell")); 
+
+  function sortColleagues(
+    colleagues: Colleague[],
+    sorter: (c1: Colleague, c2: Colleague) => number
+  ): EmailContact[] {
+    const sorted = colleagues.sort(sorter); // Colleague[] inferred
+    const result: EmailContact[] = sorted.map((ce) => ({ name: ce.name, email: ce.contact.email }));
+    return result 
+  }
+  
+  console.log(sortColleagues(colleagues.current, (a, b) => a.contact.extension - b.contact.extension));
+  console.log(sortColleagues(colleagues.current, (a, b) => a.name.length - b.name.length));
+  
+  function findFriends(friendsArray: Friend[], criterion: (friend: Friend) => boolean): string[] {
+    return friendsArray.filter(criterion).map(f => f.name); // 过滤符合条件的朋友，并提取名字
+  }
+  
+  // 测试 findFriends()
+  console.log(findFriends(friends, (friend) => friend.name.startsWith('Pa'))); // 找出名字以 "Pa" 开头的朋友
+  console.log(findFriends(friends, (friend) => friend.age < 35)); // 找出年龄小于 35 的朋友
