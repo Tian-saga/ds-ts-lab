@@ -5,6 +5,11 @@ interface Friend {
     age: number
 }
 
+interface Colleague {
+    name: string;
+    department: string;
+    age: number;
+  }
 
 // (Optional) Change the names below to your friends.
 
